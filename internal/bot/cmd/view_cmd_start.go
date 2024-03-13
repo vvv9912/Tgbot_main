@@ -8,7 +8,7 @@ import (
 
 func ViewCmdStart(next botkit.ViewFunc) botkit.ViewFunc {
 	return func(ctx context.Context, bot *tgbotapi.BotAPI, update tgbotapi.Update, botInfo botkit.BotInfo) error {
-		if _, err := bot.Send(tgbotapi.NewMessage(update.FromChat().ID, `Привет новый пользователь!`)); err != nil {
+		if _, err := bot.Send(tgbotapi.NewMessage(update.FromChat().ID, `Привет, Я бот для онлайн покупки @dinasty_nature. Выберите в каталоге нужный товар, добавьте в коризну и оформите заказ:)`)); err != nil {
 			return err
 		}
 		next(ctx, bot, update, botInfo)

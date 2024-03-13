@@ -16,58 +16,31 @@ func ViewCallbackMoredetailed(p botkit.ProductsStorager, c botkit.CorzinaStorage
 		var Data botkit.BotCommand
 		err := json.Unmarshal([]byte(update.CallbackQuery.Data), &Data)
 		if err != nil {
-			log.Printf("[ERROR] Json преобразование callback %v", err)
+			logger.Log.Error(logger.ErrorJsonUnmarshal, zap.Error(err))
 			return err
 		}
 		var MsgAddCorzine AddCorzine
 		err = json.Unmarshal([]byte(Data.Data), &MsgAddCorzine)
 		if err != nil {
-			log.Printf("[ERROR] Json преобразование callback %v", err)
+			logger.Log.Error(logger.ErrorJsonUnmarshal, zap.Error(err))
 			return err
 		}
 		product, err := p.GetProductByArticle(ctx, MsgAddCorzine.Article)
+
 		//Обновлять предыдущее сообщение (добавлять подробности)
-		//todo
 		if product.Article == 0 {
-			return err //todo
+			return err
 		}
-		//if len(product.PhotoUrl) != 0 {
-		//	//Если больше 2 фото , то  по другому. todo
-		//	text := fmt.Sprintf("Артикул: %d\nНазвание: %s\n%s\nЦена: %0.2fрублей\n", product.Article, product.Name, product.Description, product.Price)
-		//	ms1 := tgbotapi.NewEditMessageCaption(botInfo.TgId, update.CallbackQuery.Message.MessageID, text)
-		//	dataAddCorz := AddCorzine{
-		//		Article: product.Article,
-		//	}
-		//	msgAddCorz, err := json.Marshal(dataAddCorz)
-		//	if err != nil {
-		//		log.Println("") //todo
-		//	}
-		//	dataMsg := botkit.BotCommand{
-		//		Cmd:  "/addCorzine",
-		//		Data: string(msgAddCorz),
-		//	}
-		//	sss, err := json.Marshal(dataMsg)
-		//	var numericKeyboardInline = tgbotapi.NewInlineKeyboardMarkup(
-		//		tgbotapi.NewInlineKeyboardRow(
-		//			tgbotapi.NewInlineKeyboardButtonData("Добавить в корзину", string(sss)),
-		//		),
-		//	)
-		//	ms1.ReplyMarkup = &numericKeyboardInline
-		//	_, err = bot.Send(ms1)
-		//	if err != nil {
-		//		log.Println("[ERROR] Send bot: %v", err) //todo
-		//		return err
-		//	}
-		//} else {
+	
 		text := fmt.Sprintf("Артикул: %d\nНазвание: %s\n%s\nЦена: %0.2fрублей\n", product.Article, product.Name, product.Description, product.Price)
 		ms1 := tgbotapi.NewEditMessageText(botInfo.TgId, update.CallbackQuery.Message.MessageID, text)
-		//	ms1 := tgbotapi.NewEditMessageText(int64(tg_id), update.CallbackQuery.Message.MessageID, text)
+
 		dataAddCorz := AddCorzine{
 			Article: product.Article,
 		}
 		msgAddCorz, err := json.Marshal(dataAddCorz)
 		if err != nil {
-			log.Println("") //todo
+			logger.Log.Error(logger.ErrorJsonMarshal, zap.Error(err))
 			return err
 		}
 		dataMsg := botkit.BotCommand{
@@ -75,6 +48,11 @@ func ViewCallbackMoredetailed(p botkit.ProductsStorager, c botkit.CorzinaStorage
 			Data: string(msgAddCorz),
 		}
 		sss, err := json.Marshal(dataMsg)
+		if err != nil {
+			logger.Log.Error(logger.ErrorJsonMarshal, zap.Error(err))
+			return err
+		}
+
 		var numericKeyboardInline = tgbotapi.NewInlineKeyboardMarkup(
 			tgbotapi.NewInlineKeyboardRow(
 				tgbotapi.NewInlineKeyboardButtonData("Добавить в корзину", string(sss)),
@@ -83,10 +61,10 @@ func ViewCallbackMoredetailed(p botkit.ProductsStorager, c botkit.CorzinaStorage
 		ms1.ReplyMarkup = &numericKeyboardInline
 		_, err = bot.Send(ms1)
 		if err != nil {
-			log.Println("[ERROR] Send bot: %v", err) //todo
+			logger.Log.Error(logger.ErrorSendMessage, zap.Error(err))
 			return err
 		}
-		//}
+
 
 		return nil
 	}

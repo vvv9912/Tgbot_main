@@ -48,17 +48,14 @@ func ViewCallbackWriteModer(o botkit.OrderStorager, c botkit.CorzinaStorager) bo
 			StatusOrder: sddb.StatusOrderNew,
 			Pvz:         "{}",
 			Order:       string(msgcorz),
-
-			//CreatedAt:    time.Now().UTC().Add(3 * time.Hour),
 			TypeDostavka: constant.D_SAMOVIVOZ,
-			//ReadAt:      ,
 		})
 		if err != nil {
 			logger.Log.Error("Add order", zap.Error(err))
 			return err
 		}
 		//todo delete shopcart
-		msg := tgbotapi.NewMessage(botInfo.TgId, "Заказ добавлен! В течение дня с вами свяжется менеджер! Для уточнения заказа вы можете написать @Bykova_Dina; \nTest: tg://user?id=143616120")
+		msg := tgbotapi.NewMessage(botInfo.TgId, "Заказ добавлен! В течение дня с вами свяжется менеджер!\nДля уточнения заказа вы можете написать @Bykova_Dina")
 		bot.Send(msg)
 		return nil
 	}

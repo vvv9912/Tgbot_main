@@ -15,19 +15,19 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 		var Data botkit.BotCommand
 		err := json.Unmarshal([]byte(update.CallbackQuery.Data), &Data)
 		if err != nil {
-			log.Printf("[ERROR] Json преобразование callback %v", err)
+			logger.Log.Error(logger.ErrorJsonUnmarshal, zap.Error(err))
 			return err
 		}
 		//Тут запрос в БД и поиск артикулей по названию каталога
 		sProducts, err := s.GetProductsByCatalogIsAvailable(ctx, Data.Data)
 		if err != nil {
-			log.Printf("[ERROR] Get products from ProductsStorage %v", err)
-
+			logger.Log.Error("Get products by catalog", zap.Error(err))
 			return err
 		}
 		if len(sProducts) == 0 {
 			msg := tgbotapi.NewMessage(update.FromChat().ID, "Товары отсутствуют!")
 			if _, err := bot.Send(msg); err != nil {
+				logger.Log.Error(logger.ErrorSendMessage, zap.Error(err))
 				return err
 			}
 		}
@@ -36,9 +36,6 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 
 			text := fmt.Sprintf("Артикул: %d\nНазвание: %s\nПодходит для: \nЦена: %0.2f рублей\n", sProducts[i].Article, sProducts[i].Name, sProducts[i].Price)
 
-			if err != nil {
-				log.Println("") //todo
-			}
 
 			if len(sProducts[i].PhotoUrl) != 0 {
 
@@ -66,8 +63,10 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 				dataAddCorz.Article = sProducts[i].Article
 				msgAddCorz, err := json.Marshal(dataAddCorz)
 				if err != nil {
-					log.Println("") //todo
+					logger.Log.Error(logger.ErrorJsonUnmarshal, zap.Error(err))
+					return err
 				}
+
 				data := botkit.BotCommand{Cmd: "/moredetailed",
 					Data: string(msgAddCorz)}
 				podrobnee, err := json.Marshal(data)
@@ -75,9 +74,10 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 					Cmd:  "/addCorzine",
 					Data: string(msgAddCorz), //не над
 				}
+
 				sss, err := json.Marshal(dataMsg)
 				if err != nil {
-					log.Println("") //todo
+					logger.Log.Error(logger.ErrorJsonUnmarshal, zap.Error(err))
 				}
 
 				var numericKeyboardInline = tgbotapi.NewInlineKeyboardMarkup(
@@ -87,9 +87,8 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 					),
 				)
 				msg2 := tgbotapi.NewMessage(update.CallbackQuery.From.ID, text)
-
-				_ = numericKeyboardInline
 				msg2.ReplyMarkup = numericKeyboardInline
+
 				bot.Send(msg2) //todo
 
 			} else { //если нет фото
@@ -100,17 +99,29 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 				}
 				msgAddCorz, err := json.Marshal(dataAddCorz)
 				if err != nil {
-					log.Println("") //todo
+					logger.Log.Error(logger.ErrorJsonMarshal, zap.Error(err))
+					return err
 				}
+
 				dataMsg := botkit.BotCommand{
 					Cmd:  "/addCorzine",
 					Data: string(msgAddCorz),
 				}
+
 				data := botkit.BotCommand{Cmd: "/moredetailed",
 					Data: string(msgAddCorz)}
+
 				podrobnee, err := json.Marshal(data)
+				if err != nil {
+					logger.Log.Error(logger.ErrorJsonMarshal, zap.Error(err))
+					return err
+				}
 
 				sss, err := json.Marshal(dataMsg)
+				if err != nil {
+					logger.Log.Error(logger.ErrorJsonMarshal, zap.Error(err))
+					return err
+				}
 
 				var numericKeyboardInline = tgbotapi.NewInlineKeyboardMarkup(
 					tgbotapi.NewInlineKeyboardRow(
@@ -118,11 +129,11 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 						tgbotapi.NewInlineKeyboardButtonData("Добавить в корзину", string(sss)),
 					),
 				)
-				//log.Println("len(sss)=", len(sss))
+			
 				msg.ReplyMarkup = numericKeyboardInline
 				_, err = bot.Send(msg) //todo
 				if err != nil {
-					log.Println(err)
+					logger.Log.Error(logger.ErrorSendMessage, zap.Error(err))
 					return err
 				}
 
