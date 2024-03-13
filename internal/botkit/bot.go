@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
-	"tgbotv2/logger"
+	"tgbot_main/logger"
 	"time"
 )
 

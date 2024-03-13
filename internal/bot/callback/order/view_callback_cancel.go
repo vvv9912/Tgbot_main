@@ -4,8 +4,8 @@ import (
 	"context"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"go.uber.org/zap"
-	"tgbotv2/internal/botkit"
-	"tgbotv2/logger"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/logger"
 )
 
 func ViewCallbackOrderCancel(o botkit.OrderStorager, c botkit.CorzinaStorager) botkit.ViewFunc {

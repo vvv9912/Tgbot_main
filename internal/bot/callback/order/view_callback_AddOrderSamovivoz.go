@@ -6,10 +6,10 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/vvv9912/sddb"
 	"go.uber.org/zap"
-	"tgbotv2/internal/bot/constant"
-	"tgbotv2/internal/botkit"
-	"tgbotv2/internal/model"
-	"tgbotv2/logger"
+	"tgbot_main/internal/bot/constant"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/internal/model"
+	"tgbot_main/logger"
 	"time"
 )
 

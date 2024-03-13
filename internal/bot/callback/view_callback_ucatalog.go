@@ -5,8 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"log"
-	"tgbotv2/internal/botkit"
+	"go.uber.org/zap"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/logger"
 )
 
 func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
@@ -35,7 +36,6 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 		for i := range sProducts {
 
 			text := fmt.Sprintf("Артикул: %d\nНазвание: %s\nПодходит для: \nЦена: %0.2f рублей\n", sProducts[i].Article, sProducts[i].Name, sProducts[i].Price)
-
 
 			if len(sProducts[i].PhotoUrl) != 0 {
 
@@ -129,7 +129,7 @@ func ViewCallbackUcatalog(s botkit.ProductsStorager) botkit.ViewFunc {
 						tgbotapi.NewInlineKeyboardButtonData("Добавить в корзину", string(sss)),
 					),
 				)
-			
+
 				msg.ReplyMarkup = numericKeyboardInline
 				_, err = bot.Send(msg) //todo
 				if err != nil {

@@ -6,9 +6,9 @@ import (
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"go.uber.org/zap"
-	"tgbotv2/internal/botkit"
-	"tgbotv2/internal/model"
-	"tgbotv2/logger"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/internal/model"
+	"tgbot_main/logger"
 )
 
 func ViewTextOrder(o botkit.OrderStorager) botkit.ViewFunc {

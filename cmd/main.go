@@ -4,8 +4,8 @@ import (
 	"context"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/vvv9912/sddb"
-	"tgbotv2/internal/bot"
-	"tgbotv2/logger"
+	"tgbot_main/internal/bot"
+	"tgbot_main/logger"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -13,7 +13,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"tgbotv2/internal/config"
+	"tgbot_main/internal/config"
 )
 
 func run() error {

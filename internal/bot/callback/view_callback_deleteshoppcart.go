@@ -3,8 +3,8 @@ package callback
 import (
 	"context"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"tgbotv2/internal/botkit"
-	"tgbotv2/logger"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/logger"
 )
 
 func ViewCallbackdeleteshoppcart(c botkit.CorzinaStorager) botkit.ViewFunc {

@@ -4,13 +4,13 @@ import (
 	"context"
 	"errors"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"tgbotv2/internal/bot/callback"
-	callback3 "tgbotv2/internal/bot/callback/order"
-	"tgbotv2/internal/bot/cmd"
-	"tgbotv2/internal/bot/middleware"
-	"tgbotv2/internal/bot/text"
-	"tgbotv2/internal/botkit"
-	"tgbotv2/logger"
+	"tgbot_main/internal/bot/callback"
+	callback3 "tgbot_main/internal/bot/callback/order"
+	"tgbot_main/internal/bot/cmd"
+	"tgbot_main/internal/bot/middleware"
+	"tgbot_main/internal/bot/text"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/logger"
 )
 
 type MyBot struct {

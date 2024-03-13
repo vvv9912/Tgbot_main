@@ -3,7 +3,7 @@ package cmd
 import (
 	"context"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"tgbotv2/internal/botkit"
+	"tgbot_main/internal/botkit"
 )
 
 func ViewCmdButton() botkit.ViewFunc {

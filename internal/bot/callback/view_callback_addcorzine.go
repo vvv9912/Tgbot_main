@@ -8,8 +8,8 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/vvv9912/sddb"
 	"go.uber.org/zap"
-	"tgbotv2/internal/botkit"
-	"tgbotv2/logger"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/logger"
 	"time"
 )
 

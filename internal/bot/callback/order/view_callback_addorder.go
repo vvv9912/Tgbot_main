@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"log"
-	"tgbotv2/internal/botkit"
+	"tgbot_main/internal/botkit"
 )
 
 func ViewCallbackAddorder() botkit.ViewFunc {

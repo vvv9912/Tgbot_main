@@ -5,8 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"log"
-	"tgbotv2/internal/botkit"
+	"go.uber.org/zap"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/logger"
 )
 
 func ViewCallbackMoredetailed(p botkit.ProductsStorager, c botkit.CorzinaStorager) botkit.ViewFunc {
@@ -19,6 +20,7 @@ func ViewCallbackMoredetailed(p botkit.ProductsStorager, c botkit.CorzinaStorage
 			logger.Log.Error(logger.ErrorJsonUnmarshal, zap.Error(err))
 			return err
 		}
+
 		var MsgAddCorzine AddCorzine
 		err = json.Unmarshal([]byte(Data.Data), &MsgAddCorzine)
 		if err != nil {
@@ -31,7 +33,7 @@ func ViewCallbackMoredetailed(p botkit.ProductsStorager, c botkit.CorzinaStorage
 		if product.Article == 0 {
 			return err
 		}
-	
+
 		text := fmt.Sprintf("Артикул: %d\nНазвание: %s\n%s\nЦена: %0.2fрублей\n", product.Article, product.Name, product.Description, product.Price)
 		ms1 := tgbotapi.NewEditMessageText(botInfo.TgId, update.CallbackQuery.Message.MessageID, text)
 
@@ -64,7 +66,6 @@ func ViewCallbackMoredetailed(p botkit.ProductsStorager, c botkit.CorzinaStorage
 			logger.Log.Error(logger.ErrorSendMessage, zap.Error(err))
 			return err
 		}
-
 
 		return nil
 	}

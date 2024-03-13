@@ -8,8 +8,8 @@ import (
 	"github.com/vvv9912/sddb"
 	"go.uber.org/zap"
 	"strconv"
-	"tgbotv2/internal/botkit"
-	"tgbotv2/logger"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/logger"
 )
 
 func ViewCallbackdeleteshoppcartposition(c botkit.CorzinaStorager) botkit.ViewFunc {

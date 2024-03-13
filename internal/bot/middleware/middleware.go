@@ -8,10 +8,10 @@ import (
 	"github.com/vvv9912/sddb"
 	"go.uber.org/zap"
 	"log"
-	"tgbotv2/internal/bot/constant"
-	"tgbotv2/logger"
+	"tgbot_main/internal/bot/constant"
+	"tgbot_main/logger"
 
-	"tgbotv2/internal/botkit"
+	"tgbot_main/internal/botkit"
 )
 
 type Middleware struct {

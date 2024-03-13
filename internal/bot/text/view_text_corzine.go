@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"tgbotv2/internal/botkit"
+	"tgbot_main/internal/botkit"
 )
 
 func ViewTextCorzine(c botkit.CorzinaStorager) botkit.ViewFunc {

@@ -6,10 +6,10 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/vvv9912/sddb"
 	"go.uber.org/zap"
-	"tgbotv2/internal/bot/constant"
-	"tgbotv2/internal/botkit"
-	"tgbotv2/internal/model"
-	"tgbotv2/logger"
+	"tgbot_main/internal/bot/constant"
+	"tgbot_main/internal/botkit"
+	"tgbot_main/internal/model"
+	"tgbot_main/logger"
 )
 
 func ViewCallbackWriteModer(o botkit.OrderStorager, c botkit.CorzinaStorager) botkit.ViewFunc {
@@ -41,13 +41,13 @@ func ViewCallbackWriteModer(o botkit.OrderStorager, c botkit.CorzinaStorager) bo
 			return err
 		}
 		err = o.AddOrder(ctx, sddb.Orders{
-			TgID:        botInfo.TgId,
-			UserName:    botInfo.UserName,
-			FirstName:   botInfo.FirstName,
-			LastName:    botInfo.LastName,
-			StatusOrder: sddb.StatusOrderNew,
-			Pvz:         "{}",
-			Order:       string(msgcorz),
+			TgID:         botInfo.TgId,
+			UserName:     botInfo.UserName,
+			FirstName:    botInfo.FirstName,
+			LastName:     botInfo.LastName,
+			StatusOrder:  sddb.StatusOrderNew,
+			Pvz:          "{}",
+			Order:        string(msgcorz),
 			TypeDostavka: constant.D_SAMOVIVOZ,
 		})
 		if err != nil {
